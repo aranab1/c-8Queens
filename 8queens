@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+
+
+bool checkDiagDown(int board[][8], int r, int c) {
+  for(int i=1; (r+i) < 8 && (c-i) >= 0; i++) {
+    if(board[r+i][c-i]==1) return false;
+  }
+  return true;
+}
+
+bool checkDiagUp(int board[][8], int r, int c) {
+  for(int i=1; (r-i) >= 0 && (c-i) >= 0; i++) {
+    if(board[r-i][c-i]==1) return false;
+  }
+  return true;
+}
+
+bool checkLeft(int board[][8], int r, int c) {
+  for(int i=0; i < c; i++) {
+    if(board[r][i]==1) return false; //if two queens have same row value
+  }
+  return true;
+}
+
+bool ok(int board[][8], int size, int r, int c) {
+  if(checkLeft(board, r, c) && checkDiagUp(board, r, c) && checkDiagDown(board, r, c)) 
+  { 
+    return true;
+  }
+  return false;
+}
+
+void printBoard(int board[][8], int size){
+  for(int i = 0; i < 8; i++){
+    for(int j=0; j < 8; j++) {
+      cout << board[i][j] << " ";
+    }
+    cout << endl;
+  }
+}
+
+
+int main() {
+  int board[8][8] = {0};
+  int size = 8, r=0, c=0; //where c is location of current queen's column
+  int numSol = 0;
+  board[r][c] = 1;
+  while(c >= 0){
+  
+    if(ok(board, size, r, c)) {
+      c++;
+    } else{
+      r++;
+      board[r][c] = 1;
+    }
+  }
+
+}
